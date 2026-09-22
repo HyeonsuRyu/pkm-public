@@ -146,16 +146,14 @@ Host
 
 # 4. 개발 환경과 운영 환경
 
-DBMS 실행 방식과 데이터 저장 방식을 하나의 선택으로 볼 필요는 없다.
-
-예를 들어 다음과 같이 조합할 수 있다.
+DBMS 실행 방식과 데이터 저장 방식은 다음과 같이 다양하게 조합할 수 있다.
 
 | 환경  | DBMS   | 데이터            |
 | --- | ------ | -------------- |
 | 개발  | Docker | Docker Volume  |
+| 개발  | Docker | Bind Mount     |
 | 운영  | Docker | Bind Mount     |
 | 운영  | Host   | Host Directory |
-| 개발  | Docker | Bind Mount     |
 
 각각의 목적에 따라 적절한 조합을 선택할 수 있다.
 
@@ -178,7 +176,7 @@ Docker Compose 파일만으로 동일한 DBMS 버전과 실행 환경을 쉽게 
 
 운영 환경에서는 개발 환경보다 **데이터의 관리 가능성**이 중요하다.
 
-따라서 DBMS는 Docker에서 실행하되 데이터는 호스트의 명시적인 디렉터리에 저장하는 구성을 선택할 수 있다.
+따라서 DBMS는 Docker에서 실행하고, 데이터는 호스트 디렉터리에 저장하는 구성을 선택할 수 있다.
 
 ```text
 Host
@@ -197,36 +195,7 @@ Host
 
 ---
 
-# 5. 나의 선택
-
-현재 환경에서는 다음과 같이 구성한다.
-
-### Development
-
-```text
-DBMS: Docker
-Data: Docker Volume
-```
-
-개발 환경에서는 **재현성**과 **편리함**을 우선한다.
-
-Docker Compose 등을 통해 DBMS의 버전과 실행 환경을 코드로 관리하고, Docker Volume을 사용해 데이터 관리까지 Docker 환경에 통합한다.
-개발이 종료되면 환경을 다시 정리하기에도 용이하다.
-
-### Production
-
-```text
-DBMS: Docker
-Data: Bind Mount
-```
-
-운영 환경에서는 **데이터 관리 편의성**을 우선한다.
-
-
-
----
-
-# 6. DBaaS
+# 5. DBaaS
 
 직접 DBMS를 운영하지 않고 **DBaaS(Database as a Service)**를 사용할 수도 있다.
 
@@ -247,36 +216,5 @@ Managed Database
 다만 DBaaS를 사용하더라도 데이터베이스의 스키마, 쿼리, 권한, 백업 정책, 비용 및 장애 대응 방식 등에 대한 책임이 완전히 사라지는 것은 아니다.
 
 ---
-
-# 7. 정리
-
-DB 운영 환경을 구성할 때는 단순히 "DB를 Docker로 할 것인가?"만 결정해서는 안 된다.
-
-다음 두 가지를 분리해서 생각하는 것이 중요하다.
-
-```text
-DB 운영 환경
-├── DBMS 실행 방식
-│   ├── Host
-│   └── Docker
-│
-└── 데이터 저장 방식
-    ├── Bind Mount
-    └── Docker Volume
-```
-
-따라서 각각의 요구사항에 따라 조합할 수 있다.
-
-현재 선택은 다음과 같다.
-
-```text
-Development
-Docker DBMS + Docker Volume
-
-Production
-Docker DBMS + Bind Mount
-```
-
-이 구성은 개발 환경에서는 재현성을 확보하고, 운영 환경에서는 컨테이너의 격리성과 데이터에 대한 직접적인 관리 가능성을 함께 가져가는 것을 목표로 한다.
 
 
