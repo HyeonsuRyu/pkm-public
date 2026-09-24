@@ -50,13 +50,13 @@ cgit은 git 서버 프로그램이 아니다. Bare Git Server와 함께 사용�
 
 * CI/CD, Pull Request 등 협업이나 Git 외의 기능이 불가능 하다.
 
-## 2-3 [Gitea](https://about.gitea.com/)
+## 2-3 [Gitea](https://about.gitea.com/) / [Forgejo](https://forgejo.org/)
 
-GitHub와 유사한 환경을 제공하는 셀프 호스팅 플랫폼으로, 경량화가 잘 되어있는 것이 특징이다.
+GitHub와 유사한 환경을 제공하는 셀프 호스팅 플랫폼으로, 경량화가 잘 되어있는 것이 특징이다. Forgejo는 원래 Gitea에서 포크되어 나온 프로젝트로, 현재는 하드 포크되어 gitea와 더이상 호환이 보장되지 않는다.
 
 ### 장점
 * 가볍다.
-* 오픈소스이다. ([MIT](https://github.com/go-gitea/gitea/blob/main/LICENSE))
+* 오픈소스이다. ([MIT](https://github.com/go-gitea/gitea/blob/main/LICENSE)(Giteea) / [GPLv3](https://codeberg.org/forgejo/forgejo/src/branch/forgejo/LICENSE))(Forgejo))
 * Pull Request, Ci/CD 기능이 포함되어 있다.
 * On-premise, cloude 환경이 모두 지원된다.
 * 필요한 경우, Enterprise 버전을 구독하여 기술 지원을 받을 수 있다.
