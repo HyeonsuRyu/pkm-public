@@ -34,9 +34,26 @@ git init --bare <repository이름>.git
 ```
 
 # 2. (옵션) git 전용 계정 및 git-server 디렉터리 생성
+git 전용 계정은 일반 사용자 계정처럼 생성할 수 있다.
+그러나 [git](https://git-scm.com/book/ko/v2/Git-%EC%84%9C%EB%B2%84-%EC%84%9C%EB%B2%84-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)에서는 사용자들이 git 작업만 실행하도록 제한하는 방법을 추천한다.
+아래는 위 링크에서 소개하는 git 전용 계정 및 서비스 디렉터리 생성 방법이다.
+## 서버
 ```bash
+# 계정 생성 및 git 계정 shell로 로그인
+sudo adduser git
+su git
 
+# ssh 접속용 키 관리 파일 생성
+cd
+mkdir .ssh && chmod 700 .ssh
+touch .ssh/authorized_keys && chmod 600 .ssh/authorized_keys
 ```
+## 클라이언트
+아래는 윈도우 클라이언트에서 ssh-keygen을 이용해 ED25519 방식 ssh 키를 발급하는 예시이다.
+```powershell
+ssh-keygen -t ed25519 -C "email@example.com"
+```
+이후 생성된 `pub` 파일을 git 서버로 옮긴다.
 
 # 3. 클라이언트 initial push
 ssh 통신이 이미 가능해야 한다. 사용자가 여러명인 경우, 서버 계정을 여러개 만들기보다, git 계정를 하나 만들고 여러 사용자들의 ssh 키를 git 계정에 등록하는 방법을 [Git 홈페이지](https://git-scm.com/book/ko/v2/Git-%EC%84%9C%EB%B2%84-%EC%84%9C%EB%B2%84%EC%97%90-Git-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)에서 추천하고 있다.
