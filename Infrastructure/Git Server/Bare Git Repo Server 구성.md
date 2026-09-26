@@ -30,11 +30,37 @@ cd <디렉터리이름>
 git config --global init.defaultBranch <브랜치이름>
 
 # Bare Repository 생성
-git init --bare <저장소이름>.git
+git init --bare <repository이름>.git
 ```
 
-# 2. 클라이언트 initial push
-ssh 통신이 이미 가능해야 합니다. 사용자가 여러명인 경우, 서버 계정을 여러개 만들기보다, git 계정를 하나 만들고 여러 사용자들의 ssh 키를 git 계정에 등록하는 방법을 [Git 홈페이지](https://git-scm.com/book/ko/v2/Git-%EC%84%9C%EB%B2%84-%EC%84%9C%EB%B2%84%EC%97%90-Git-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)에서 추천하고 있다.
+# 2. (옵션) git 전용 계정 및 git-server 디렉터리 생성
 ```bash
 
 ```
+
+# 3. 클라이언트 initial push
+ssh 통신이 이미 가능해야 한다. 사용자가 여러명인 경우, 서버 계정을 여러개 만들기보다, git 계정를 하나 만들고 여러 사용자들의 ssh 키를 git 계정에 등록하는 방법을 [Git 홈페이지](https://git-scm.com/book/ko/v2/Git-%EC%84%9C%EB%B2%84-%EC%84%9C%EB%B2%84%EC%97%90-Git-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)에서 추천하고 있다.
+```bash
+# 레포지토리 생성 및 초기화
+mkdir <repository이름>
+cd <repository이름>
+git init
+echo "# Hello World!" > README.md
+git add .
+git commit -m "feat: initial commit"
+
+# origin 등록
+# 접속 ssh 계정이 bare repository에 대한 권한이 있어야한다.
+git remote add origin ssh://<계정명>@<서버주소>[:<접속포트>]/<Bare Repository 디렉터리 경로>
+# ex) git remote add origin ssh://git@192.168.0.2/srv/git/repo.git
+
+# 브랜치 설정 및 push
+git branch -M <브랜치이름>
+git push -u origin <브랜치이름>
+```
+
+# 4. 클라이언트 clone
+``` bash
+git clone ssh://<계정명>@<서버주소>[:<접속포트>]/<Bare Repository 디렉터리 경로>
+```
+클라이언트 로컬에 repository가 정상적으로 받아졌으면 성공이다.
